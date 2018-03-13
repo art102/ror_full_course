@@ -24,7 +24,7 @@ sides.sort!
 
 # calculcate triangle rectangular 
 # and write value into the rectangular_triangle variable
-rectangular_triangle = (sides[2]**2) == (sides[0]**2) + (sides[1]**2)
+rectangular_triangle = sides[2]**2 == sides[0]**2 + sides[1]**2
 
 if rectangular_triangle && sides.uniq.size == 2
 	puts "Triangle is rectangular and is isosceles!"
