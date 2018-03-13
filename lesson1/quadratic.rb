@@ -15,12 +15,11 @@ coefficient_c = gets.strip.to_f
 # calculate discriminant
 discriminant = (coefficient_b ** 2) - (4 * coefficient_a * coefficient_c)
 
-# calculate square root of discriminant
-sqr_discriminant = Math.sqrt(discriminant)
-
 # if calculated discriminant more zero
 if discriminant > 0
 	# calculate second squire root and write value to sqr_1
+	# calculate square root of discriminant
+	sqr_discriminant = Math.sqrt(discriminant)
 	sqr_1 = (-coefficient_b + sqr_discriminant) / (2 * coefficient_a)
 	# calculate second squire root and write value to sqr_2
 	sqr_2 = (-coefficient_b - sqr_discriminant) / (2 * coefficient_a)
@@ -31,7 +30,7 @@ if discriminant > 0
 # if the discriminant is zero
 # print discriminant and one rounded root
 elsif discriminant == 0
-	sqr = -coefficient_b / (2 * -coefficient_a)
+	sqr = -coefficient_b / (2 * coefficient_a)
 	puts "The discriminant is #{discriminant}"
 	puts "The square is #{sqr.round(3)}"
 # if the discriminant less than zero
