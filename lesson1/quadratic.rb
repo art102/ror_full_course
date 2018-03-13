@@ -33,7 +33,7 @@ elsif discriminant == 0
 	puts "The square is #{sqr.round(3)}"
 # if the discriminant less than zero
 # print discriminant value and say 'No roots!'
-elsif discriminant < 0
+else
 	puts "The discriminant is #{discriminant}"
 	puts 'No roots!'
 end
