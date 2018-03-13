@@ -1,5 +1,3 @@
-require 'mathn'
-
 # get the first coefficient
 print 'Enter coefficient "a": '
 coefficient_a = gets.strip.to_f
