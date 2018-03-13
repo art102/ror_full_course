@@ -1,22 +1,17 @@
-# get the first sides from user
-print 'Enter first side: '
-a_side = gets.strip.to_i
-
-# get the second sides from user
-print 'Enter second side: '
-b_side = gets.strip.to_i
-
-# get the third sides from user
-print 'Enter third side: '
-c_side = gets.strip.to_i
-
 #create empty array
 sides = []
 
-# add sides to array
-sides << a_side
-sides << b_side
-sides << c_side
+# get the first sides from user
+print 'Enter first side: '
+sides << gets.strip.to_i
+
+# get the second sides from user
+print 'Enter second side: '
+sides << gets.strip.to_i
+
+# get the third sides from user
+print 'Enter third side: '
+sides << gets.strip.to_i
 
 # sort size from minimal to max
 # maximum number will be in last position
