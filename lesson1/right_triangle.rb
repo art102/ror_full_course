@@ -26,8 +26,8 @@ if rectangular_triangle && sides.uniq.size == 2
 elsif rectangular_triangle
 	puts 'Triangle is rectangular.'
 elsif sides.uniq.size == 1
-	puts 'Triangle is rectangular and equilateral.'
+	puts 'Triangle is isosceles and equilateral, but not rectangular.'
 else
-	puts 'triangle unknown'
+	puts 'Triangle unknown.'
 end
 
