@@ -22,7 +22,7 @@ leap_year = date[2] % 4 == 0 ? true : false
 days_of_month[1] = 29 if leap_year
 
 # If day and month are equal 1
-# amount of day 2
+# amount of day 1
 if date[0] == 1 && date[1] == 1
   index_number = 1
 # If date more than 12
