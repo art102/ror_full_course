@@ -1,15 +1,13 @@
 # create array with English alphabet
 alphabet = ('a'..'z').to_a
-hh = {}
+vowels_numbers = {}
 
-alphabet.each_with_index do |l, i|
-  i += 1
-  hh[l] = i if l == 'a'
-  hh[l] = i if l == 'e'
-  hh[l] = i if l == 'i'
-  hh[l] = i if l == 'o'
-  hh[l] = i if l == 'u'
-  hh[l] = i if l == 'y'
+# Create array with vowels
+vowels = %w(a e i o u y)
+
+alphabet.each.with_index(1) do |letter, index|
+  # Add vowel if find it
+  vowels_numbers[letter] = index if vowels.include?(letter)
 end
 
-p hh
+p vowels_numbers
