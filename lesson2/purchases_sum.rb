@@ -1,9 +1,4 @@
 =begin
-Сумма покупок. Пользователь вводит поочередно название товара, 
-цену за единицу и кол-во купленного товара (может быть нецелым числом). 
-Пользователь может ввести произвольное кол-во товаров до тех пор, 
-пока не введет "стоп" в качестве названия товара. 
-На основе введенных данных требуетеся:
 Заполнить и вывести на экран хеш, ключами которого являются названия товаров, 
 а значением - вложенный хеш, содержащий цену за единицу товара и кол-во купленного товара.
 Также вывести итоговую сумму за каждый товар.
@@ -26,23 +21,17 @@ loop do
   amount = gets.strip.to_f
 
   # add item name, price and amount to "cart" hash
-  cart[item_name] = { price => amount }
+  # cart[item_name] = { price => amount }
+  cart[item_name] = {price: price, amount: amount}
 end
 
-#create empty array for total cost of cart
-cost_of_cart = []
+total_cost = 0
 
-# get values of hash
-cart.each do |item, price|
-  price.each do |val, amount|
-    # get cost of many items of certain kind
-    v = val * amount
-    # add cost to array
-    cost_of_cart << v
-    puts "#{item} - #{v} dollars."
-  end 
+cart.each do |item_name, item_info|
+  one_product_cost = item_info[:price] * item_info[:amount]
+  #calculate cost of all products in cart
+  total_cost += one_product_cost
+  puts "#{item_name} - #{one_product_cost}$"
 end
-#get cost sum of all items 
-total_cost = cost_of_cart.inject(0) { |one, two| one + two }
 
-puts "Cost of purchases in the cart: #{total_cost} dollars."
+puts "Cost of all products in cart - #{total_cost}$"
