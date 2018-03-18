@@ -1,12 +1,11 @@
 fibonacci_row = [1, 1]
 
-loop do
+while fibonacci_row.last < 100
   number = fibonacci_row[-1] + fibonacci_row[-2]
-  break if number > 100
   fibonacci_row << number
   
 end
 
-puts 'Thihs is fibonacci row:'
-print fibonacci_row
+puts 'This is fibonacci row:'
+print fibonacci_row.first(fibonacci_row.size-1)
 puts ""

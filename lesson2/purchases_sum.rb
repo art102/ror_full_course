@@ -11,14 +11,14 @@ cart = {}
 # Create loop where get info from user
 loop do
   print 'What would you like to buy? (enter "stop" if you finished): '
-  item_name = gets.strip.downcase
+  item_name = gets.downcase
   break if item_name == 'stop'
 
   print 'Enter price: '
-  price = gets.strip.to_f
+  price = gets.to_f
 
   print 'Enter amount: '
-  amount = gets.strip.to_f
+  amount = gets.to_f
 
   # add item name, price and amount to "cart" hash
   # cart[item_name] = { price => amount }

@@ -2,13 +2,27 @@
 date = []
 
 print 'Enter day: '
-date << gets.strip.to_i
+date << gets.to_i
+# If date more than 12
+# print error
+if date[0] < 0
+  puts 'Error! Day connot be less than 0'
+  exit
+end
 
 print 'Enter month: '
-date << gets.strip.to_i
+date << gets.to_i
+if date[1] > 12 || date[1] < 0
+  puts 'Error! Wrong month!'
+  exit
+end
 
 print 'Enter year: '
-date << gets.strip.to_i
+date << gets.to_i
+if date[2] < 0 || date[2] == 0
+  puts 'Error! Wrong year!'
+  exit
+end
 
 # Create array with amount of days 
 # in the every moths of year
@@ -16,7 +30,12 @@ days_of_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 # write to leap_year true if
 # year is leap-year and false if not
-leap_year = date[2] % 4 == 0 ? true : false
+# leap_year = true if date[2] % 4 == 0 && date[2] % 400 == 0
+if date[2] % 4 == 0 || date[2] % 400 == 0
+  leap_year = true
+else
+  leap_year = false
+end
 # If now is leap-year then
 # change value of second element array
 days_of_month[1] = 29 if leap_year
@@ -25,18 +44,10 @@ days_of_month[1] = 29 if leap_year
 # amount of day 1
 if date[0] == 1 && date[1] == 1
   index_number = 1
-# If date more than 12
-# print error
-elsif date[1] > 12
-  puts 'Error! Can not be more than 12 months.'
-  exit
 else
   months = date[1] - 1
   # calculate amount of days
-  index_number = date[0] + days_of_month[0...months].inject(0) { |one, two| one + two }
+  index_number = date[0] + days_of_month.first(months).inject(:+)
+  puts "#{index_number} day(s)"
 end
-
-puts "#{index_number} day(s)"
-
-
 
