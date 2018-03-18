@@ -11,7 +11,7 @@ cart = {}
 # Create loop where get info from user
 loop do
   print 'What would you like to buy? (enter "stop" if you finished): '
-  item_name = gets.downcase
+  item_name = gets.strip.downcase
   break if item_name == 'stop'
 
   print 'Enter price: '

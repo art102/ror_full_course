@@ -5,8 +5,8 @@ print 'Enter day: '
 date << gets.to_i
 # If date more than 12
 # print error
-if date[0] < 0
-  puts 'Error! Day connot be less than 0'
+if date[0] < 0 || date[0] > 31
+  puts 'Error! Wrong day!'
   exit
 end
 
@@ -48,6 +48,6 @@ else
   months = date[1] - 1
   # calculate amount of days
   index_number = date[0] + days_of_month.first(months).inject(:+)
-  puts "#{index_number} day(s)"
+  puts "#{index_number} day"
 end
 
