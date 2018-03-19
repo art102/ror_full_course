@@ -22,7 +22,7 @@ loop do
 
   # add item name, price and amount to "cart" hash
   # cart[item_name] = { price => amount }
-  cart[item_name] = {price: price, amount: amount}
+  cart[item_name] = { price: price, amount: amount }
 end
 
 total_cost = 0
