@@ -2,24 +2,24 @@
 date = []
 
 print 'Enter day: '
-date << gets.to_i
+day = gets.to_i
 # If date more than 12
 # print error
-if date[0] < 0 || date[0] > 31
+if day < 0 || day > 31
   puts 'Error! Wrong day!'
   exit
 end
 
 print 'Enter month: '
-date << gets.to_i
-if date[1] > 12 || date[1] < 0
+month = gets.to_i
+if month > 12 || month < 0
   puts 'Error! Wrong month!'
   exit
 end
 
 print 'Enter year: '
-date << gets.to_i
-if date[2] < 0 || date[2] == 0
+year = gets.to_i
+if year < 0 || year == 0
   puts 'Error! Wrong year!'
   exit
 end
@@ -30,24 +30,19 @@ days_of_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 # write to leap_year true if
 # year is leap-year and false if not
-# leap_year = true if date[2] % 4 == 0 && date[2] % 400 == 0
-if date[2] % 4 == 0 || date[2] % 400 == 0
-  leap_year = true
-else
-  leap_year = false
-end
+leap_year ||= year % 4 == 0 && year % 100 != 0 || year % 400 == 0
+  
 # If now is leap-year then
 # change value of second element array
 days_of_month[1] = 29 if leap_year
 
 # If day and month are equal 1
 # amount of day 1
-if date[0] == 1 && date[1] == 1
-  index_number = 1
+if day == 1 && month == 1 || month == 1
+  index_number = day
 else
-  months = date[1] - 1
+  months = month - 1
   # calculate amount of days
-  index_number = date[0] + days_of_month.first(months).inject(:+)
-  puts "#{index_number} day"
+  index_number = day + days_of_month.first(months).inject(:+)
 end
-
+puts "#{index_number} day"
