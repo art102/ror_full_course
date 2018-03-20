@@ -1,7 +1,8 @@
 fibonacci_row = [1, 1]
 
-while fibonacci_row.max != 89
+while fibonacci_row.max < 100
   number = fibonacci_row[-1] + fibonacci_row[-2]
+  break if number > 100
   fibonacci_row << number 
 end
 
