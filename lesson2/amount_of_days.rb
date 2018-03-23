@@ -28,21 +28,15 @@ end
 # in the every moths of year
 days_of_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-# write to leap_year true if
-# year is leap-year and false if not
-leap_year ||= year % 4 == 0 && year % 100 != 0 || year % 400 == 0
+# write to leap_year true if year is leap-year
+leap_year = year % 4 == 0 && year % 100 != 0 || year % 400 == 0
   
 # If now is leap-year then
 # change value of second element array
 days_of_month[1] = 29 if leap_year
 
-# If day and month are equal 1
-# amount of day 1
-if day == 1 && month == 1 || month == 1
-  index_number = day
-else
-  months = month - 1
-  # calculate amount of days
-  index_number = day + days_of_month.first(months).inject(:+)
-end
+# index_number = day + days_of_month.first(month - 1).inject(0) { |days, n| days + n}
+# below show short form
+index_number = day + days_of_month.first(month - 1).inject(0, :+)
+
 puts "#{index_number} day"

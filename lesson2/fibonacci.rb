@@ -1,11 +1,9 @@
-fibonacci_row = [1, 1]
+fibonacci_row = [0, 1]
+next_element = 1
 
-while fibonacci_row.max < 100
-  number = fibonacci_row[-1] + fibonacci_row[-2]
-  break if number > 100
-  fibonacci_row << number 
+while next_element < 100
+  fibonacci_row << next_element
+  next_element = fibonacci_row[-1] + fibonacci_row[-2]
 end
 
-puts 'This is fibonacci row:'
 p fibonacci_row
-
