@@ -9,6 +9,7 @@ class Train
     @wagons = wagons
     @speed = speed
     @@trains[number] = type
+    route = Route.new
   end
 
   def start
@@ -27,7 +28,7 @@ class Train
     @speed == 0 && @wagons > 0 ? @wagons -= 1 : 'Train is running!'
   end
 
-  def accept_route(name)
-    @route = route_name
+  def accept_route(route)
+    @route = route
   end
 end
