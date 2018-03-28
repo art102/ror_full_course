@@ -1,10 +1,13 @@
 class Train
-  attr_reader :speed
+  attr_reader :wagons
+  attr_accessor :speed
 
   @@trains = {}
-  def initialize(number, type)
+  def initialize(number, type, wagons, speed = 0)
     @number = number
     @type = type
+    @wagons = wagons
+    @speed = speed
     @@trains[number] = type
   end
 
@@ -12,7 +15,19 @@ class Train
     @speed = 20
   end
 
-  def brake
+  def stop
     @speed = 0
+  end
+
+  def attach_wagon
+    @speed == 0 ? @wagons += 1 : 'Train is running!'
+  end
+
+  def detach_wagon
+    @speed == 0 && @wagons > 0 ? @wagons -= 1 : 'Train is running!'
+  end
+
+  def accept_route(name)
+    @route = route_name
   end
 end
