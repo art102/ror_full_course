@@ -2,19 +2,19 @@ class Station
   
   def initialize(name)
     @name = name
+    @trains = []
   end
 
   def accept_train(train_number)
-    @trains_station = []
-    @trains_station << train_number
+    @trains << train_number
   end
 
   def depart_train
-    @@trains_station.pop
+    @trains_station.pop
   end
 
   def current_trains
-    @@trains_station { |number, type| puts "#{number} - {type}" }
+    @trains_station.each { |number, type| puts "#{number} - {type}" }
   end
 
   def amount_trains
