@@ -1,27 +1,31 @@
-class Station
-  
+require './train.rb'
+
+class Station 
   def initialize(name)
     @name = name
     @trains = []
   end
 
-  def accept_train(train_number)
-    @trains << train_number
+  # add train object to trains array
+  def add_train(train)
+    @trains << train
   end
 
-  def depart_train
-    @trains_station.pop
-  end
-
+  # return all trains on station
   def current_trains
-    @trains_station.each { |number, type| puts "#{number} - {type}" }
+    @trains
   end
 
+  # get amount trains by type and return it
   def amount_trains
-    cargo_amount = 0
-    @trains_station.values.each { |train| cargo_amount += 1 if train == 'cargo' }
-    passengers_amount = @trains.values.size - cargo_amount
+    cargos = @trains.select { |train| train.type == 'cargo' }
+    return "cargos - #{cargos.size}, passangers - #{@trains.size - cargos.size}"
+  end
 
-    puts "cargo - #{cargo_amount}, passengers - #{passengers_amount}"
+  # remove train from station
+  def depart_train(train)
+    @trains.delete(train)
   end
 end
+
+
