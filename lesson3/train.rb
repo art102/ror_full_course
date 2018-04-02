@@ -1,23 +1,26 @@
-class Train
-  attr_reader :wagons
-  attr_accessor :speed
+require './route.rb'
+require './station.rb'
 
-  @@trains = {}
-  def initialize(number, type, wagons, speed = 0)
+class Train
+  attr_reader :wagons, :speed, :type
+
+  def initialize(number, type, wagons)
     @number = number
     @type = type
     @wagons = wagons
-    @speed = speed
-    @@trains[number] = type
-    route = Route.new
+    @speed = 0
   end
 
   def start
-    @speed = 20
+    @speed = 10
   end
 
-  def stop
-    @speed = 0
+  def speedup(amount)
+    @speed += amount
+  end
+
+  def speed_down(amount)
+    @speed -= amount if @speed > 0
   end
 
   def attach_wagon
@@ -28,7 +31,7 @@ class Train
     @speed == 0 && @wagons > 0 ? @wagons -= 1 : 'Train is running!'
   end
 
-  def accept_route(route)
-    @route = route
+  def add_route(route)
+    
   end
 end
