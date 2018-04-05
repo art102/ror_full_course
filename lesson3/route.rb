@@ -3,10 +3,8 @@ attr_reader :stations
 
 class Route
   def initialize(first_station, last_station)
-    #create empty array for stations
-    @stations = []
     # add first and last stations to array stations
-    @stations.push(first_station, last_station)
+    @stations = [first_station, last_station]
   end
 
   # output all stations

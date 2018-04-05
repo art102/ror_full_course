@@ -9,7 +9,6 @@ class Train
     @type = type
     @wagons = wagons
     @speed = 0
-    @index = @route.stations.first
   end
 
   def start
@@ -40,6 +39,5 @@ class Train
 
   end
 
-  def move_back
-  end
+  def move_
 end
