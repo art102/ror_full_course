@@ -1,4 +1,5 @@
 require './station.rb'
+attr_reader :stations
 
 class Route
   def initialize(first_station, last_station)
