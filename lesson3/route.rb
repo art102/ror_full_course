@@ -1,7 +1,8 @@
-require './station.rb'
-attr_reader :stations
+#require './station.rb'
 
 class Route
+  attr_reader :stations
+
   def initialize(first_station, last_station)
     # add first and last stations to array stations
     @stations = [first_station, last_station]
