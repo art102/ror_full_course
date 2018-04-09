@@ -12,8 +12,15 @@ puts 'Created new station MSK'
 kazan = Station.new('KZN')
 puts 'Created new station KZN'
 
-route_ufs_msk = Route.new(st1, st2)
-route_ufs_msk.add_station(kazan)
-route_ufs_msk.show_stations
+route_ufa_msk = Route.new(st1, st2)
+route_ufa_msk.add_station(kazan)
+#route_ufa_msk.show_stations
 
-p route_ufs_msk
+train = Train.new(77,'cargo',12)
+train.accept_route(route_ufa_msk)
+train.next_station
+train.prev_station
+train.print_prev_station
+train.print_current_station
+train.go_next_station
+train.print_current_station

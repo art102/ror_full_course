@@ -9,7 +9,7 @@ class Train
     @type = type
     @wagons = wagons
     @speed = 0
-    @route = Route.new(first_station, last_station)
+    #@route = Route.new(first_station, last_station)
   end
 
   def start
@@ -35,28 +35,31 @@ class Train
   def accept_route(route)
     #@route.stations[0].add_train(self)
     @route = route
-    @current_station = route.first
-    puts "Train is on the #{@current_station} and train is moving on the route #{@route.first} - #{@route.last}"
+    @current_station = @route.stations.first 
+    puts "Train is on the #{@current_station.name} and train is moving on the route #{@route.stations.first.name} - #{@route.stations.last.name}"
   end
 
   def next_station
-    @next_station = @route[@route.index(@current_station) + 1] if @current_station != @route.last
+    @next_station = @route.stations.index(@current_station) + 1 if @current_station != @route.stations.last
+    puts "Next station is #{@route.stations[@next_station].name}."
   end
 
   def prev_station
-    @prev_station = @route[@route.index(@current_station) - 1] if @current_station != @route.first
+    @prev_station = @route.stations.index(@current_station) - 1 if @current_station != @route.stations.first
+    # puts @prev_station
+    # #puts "Previous station is #{@route.stations[@prev_station].name}."
   end
 
   def print_prev_station
     if prev_station.nil? == true
-      puts 'Поезд находится на начальной станции'
+      puts 'Train is on the first station.'
     else
-      puts "Предыдущая станция #{prev_station}"
+      puts "Previous station is #{prev_station}"
     end
   end
 
   def print_current_station
-    puts "Текущая станция #{@current_station}"
+    puts "Текущая станция #{@current_station.name}"
   end
 
   def print_next_station
