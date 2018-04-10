@@ -63,7 +63,7 @@ class Train
   end
 
   def print_next_station
-    if next_station.nil? == true
+    if next_station.nil?
       puts 'Поезд находится на конечной станции'
     else
       puts "Следующая станция станция #{next_station}"
@@ -72,10 +72,12 @@ class Train
 
   def go_next_station
     @current_station = @next_station
+    #puts @route.stations[@current_station].name
   end
 
   def go_prev_station
     @current_station = @prev_station
+    #puts @route.stations[@current_station].name
   end
 
   # def moving_from_station(train)

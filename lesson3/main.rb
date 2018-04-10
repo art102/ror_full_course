@@ -23,4 +23,4 @@ train.prev_station
 train.print_prev_station
 train.print_current_station
 train.go_next_station
-train.print_current_station
+#train.print_current_station
