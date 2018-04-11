@@ -19,9 +19,14 @@ class Station
   end
 
   # get amount trains by type and return it
-  def amount_trains
-    cargos = @trains.select { |train| train.type == 'cargo' }
-    return "cargos - #{cargos.size}, passangers - #{@trains.size - cargos.size}"
+  def amount_trains(type_of_train)
+    trains_by_type = []
+    @trains.each do |train|
+      trains_by_type << train if type_of_train == train.type
+    end
+    p trains_by_type
+    # cargos = @trains.select { |train| train.type == 'cargo' }
+    # return "cargos - #{cargos.size}, passangers - #{@trains.size - cargos.size}"
   end
 
   # remove train from station
