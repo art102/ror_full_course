@@ -20,6 +20,11 @@ class Route
 
   # remove station from route
   def remove_station(station)
-    @stations.delete(station)
+    # remove station object if isn't last or first station
+    if station != @stations.first && station != @stations.last
+      @stations.delete(station)
+    else
+      puts "You can't first or last station!"
+    end
   end
 end
