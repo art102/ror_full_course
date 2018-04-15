@@ -28,12 +28,26 @@ class Train
     end
   end
 
+  def message
+    return 'Train is running!'
+  end
+
   def attach_wagon
-    @speed == 0 ? @wagons += 1 : 'Train is running!'
+    #@speed == 0 ? @wagons += 1 : 'Train is running!'
+    if @speed == 0
+      @wagons += 1
+    else
+      message
+    end
   end
 
   def detach_wagon
-    @speed == 0 && @wagons > 0 ? @wagons -= 1 : 'Train is running!'
+    # @speed == 0 && @wagons > 0 ? @wagons -= 1 : 'Train is running!'
+    if @speed == 0 && @wagons > 0
+      @wagons -= 1
+    else
+      message
+    end
   end
 
   def accept_route(route)
@@ -55,11 +69,13 @@ class Train
     # #puts "Previous station is #{@route.stations[@prev_station].name}."
   end
 
+  # go to the next station on the route
   def move_forward
     @current_station += 1 if @route.stations[@current_station] != @route.stations.last
     @route.stations[@current_station]
   end
 
+  # go to the next station on the route
   def move_back
     @current_station -= 1 if @route.stations[@current_station] != @route.stations.first
     @route.stations[@current_station]
