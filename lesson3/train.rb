@@ -57,7 +57,7 @@ class Train
   def accept_route(route)
     @route = route
     @current_station = 0
-    @route.stations[@current_station].add_train(self)
+    position.add_train(self)
   end
 
   # show next station on the route
@@ -73,12 +73,12 @@ class Train
   # go to the next station on the route
   def move_forward
     @current_station += 1 if @route.stations[@current_station] != @route.stations.last
-    @route.stations[@current_station].add_train(self)
+    position.add_train(self)
   end
 
   # go to the next station on the route
   def move_back
     @current_station -= 1 if @route.stations[@current_station] != @route.stations.first
-    @route.stations[@current_station].add_train(self)
+    position.add_train(self)
   end
 end
