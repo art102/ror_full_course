@@ -29,7 +29,7 @@ class Train
   end
 
   def message
-    return 'Train is running!'
+    'Train is running!'
   end
 
   def attach_wagon
@@ -73,12 +73,14 @@ class Train
   # go to the next station on the route
   def move_forward
     @current_station += 1 if @route.stations[@current_station] != @route.stations.last
+    position.depart_train(self)
     position.add_train(self)
   end
 
   # go to the next station on the route
   def move_back
     @current_station -= 1 if @route.stations[@current_station] != @route.stations.first
+    position.depart_train(self)
     position.add_train(self)
   end
 end

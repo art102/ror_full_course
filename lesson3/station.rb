@@ -20,9 +20,7 @@ class Station
 
   # get amount trains by type and return it
   def amount_trains(type_of_train)
-    trains_by_type = []
-    @trains.select { |train| trains_by_type << train if train.type == type_of_train }
-    trains_by_type
+    @trains.select { |train| train.type == type_of_train }
   end
 
   # remove train from station
