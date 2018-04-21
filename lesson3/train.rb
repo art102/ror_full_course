@@ -72,15 +72,15 @@ class Train
 
   # go to the next station on the route
   def move_forward
-    @current_station += 1 if @route.stations[@current_station] != @route.stations.last
     position.depart_train(self)
+    @current_station += 1 if @route.stations[@current_station] != @route.stations.last
     position.add_train(self)
   end
 
   # go to the next station on the route
   def move_back
-    @current_station -= 1 if @route.stations[@current_station] != @route.stations.first
     position.depart_train(self)
+    @current_station -= 1 if @route.stations[@current_station] != @route.stations.first
     position.add_train(self)
   end
 end
