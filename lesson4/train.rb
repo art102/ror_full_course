@@ -33,6 +33,7 @@ class Train
   end
 
   def attach_wagon
+    #@speed == 0 ? @wagons += 1 : 'Train is running!'
     if @speed == 0
       @wagons += 1
     else
@@ -41,6 +42,7 @@ class Train
   end
 
   def detach_wagon
+    # @speed == 0 && @wagons > 0 ? @wagons -= 1 : 'Train is running!'
     if @speed == 0 && @wagons > 0
       @wagons -= 1
     else
