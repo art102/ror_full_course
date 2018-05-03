@@ -12,26 +12,6 @@ class Train
     #@route = Route.new(first_station, last_station)
   end
 
-  def start
-    @speed = 10
-  end
-
-  def speedup(amount)
-    @speed += amount
-  end
-
-  def speed_down(amount)
-    if @speed - amount < 0
-      puts "Speed can't be less than zero!"
-    else
-      @speed -= amount
-    end
-  end
-
-  def message
-    'Train is running!'
-  end
-
   def attach_wagon(wagon)
     if @speed == 0
       @wagons << wagon
@@ -81,4 +61,30 @@ class Train
     @current_station -= 1 if @route.stations[@current_station] != @route.stations.first
     position.add_train(self)
   end
+
+  protected
+
+  # because dispatcher can't start the train
+  def start
+    @speed = 10
+  end
+
+  # because dispatcher can't change speed the train
+  def speedup(amount)
+    @speed += amount
+  end
+
+  def speed_down(amount)
+    if @speed - amount < 0
+      puts "Speed can't be less than zero!"
+    else
+      @speed -= amount
+    end
+  end
+
+  # service method
+  def message
+    'Train is running!'
+  end
+
 end
