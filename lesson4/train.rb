@@ -2,13 +2,13 @@
 # require './station.rb'
 
 class Train
-  attr_reader :wagons, :speed, :type
+  attr_reader :speed, :type
 
-  def initialize(number, type, wagons)
+  def initialize(number, type)
     @number = number
     @type = type
-    @wagons = wagons
     @speed = 0
+    @wagons = []
     #@route = Route.new(first_station, last_station)
   end
 
@@ -32,17 +32,15 @@ class Train
     'Train is running!'
   end
 
-  def attach_wagon
-    #@speed == 0 ? @wagons += 1 : 'Train is running!'
+  def attach_wagon(wagon)
     if @speed == 0
-      @wagons += 1
+      @wagons << wagon
     else
       message
     end
   end
 
   def detach_wagon
-    # @speed == 0 && @wagons > 0 ? @wagons -= 1 : 'Train is running!'
     if @speed == 0 && @wagons > 0
       @wagons -= 1
     else
