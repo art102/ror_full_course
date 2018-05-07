@@ -19,18 +19,20 @@ puts %q(
   10 - Move train to back
   11 - Show stations on the route
   12 - Show trains on the stations
+  13 - Show all trains
 )
 
 # number for something
-numb = 0
+# numb = 0
+
+# create empty array for trains
+@stations = []
 
 loop do
-  print 'Please enter number or press "enter" if you want to exit: '
+  print 'Please enter number or press "0" if you want to exit: '
   users_input = gets.to_i
 
-  break if users_input == ''
-
-  numb += 1
+  break if users_input == 0
 
   def create_wagon(type)
     if type == 'cargo'
@@ -44,85 +46,68 @@ loop do
     end
   end
 
+  def train_message
+    puts 'Train has been created!'
+  end
+
   def create_train(type)
-    if type == 'cargo'
+    #random number for train
+    rand_num = rand(1..30)
+    if type == 1
       @cargo_trains = []
-      @cargo_trains << CargoTrain.new
-    elsif type == 'passenger'
+      @cargo_trains << CargoTrain.new(rand_num,'cargo')
+      train_message
+    elsif type == 2
       @passenger_trains = []
-      @passenger_trains << PassengerTrain.new
+      @passenger_trains << PassengerTrain.new(rand_num,'passenger')
+      train_message
     else
       puts 'Incorrect type!'
     end
   end
 
+  def show_all_trains
+    puts "All existing trains: #{@cargo_trains + @passenger_trains}"
+  end
 
+  def create_route
+    if @stations.empty? || @stations.size == 1
+      puts "You have to create two stations. Please type 1 and create two stations"
+    else
+      puts "Please choose a first station and last station for route:"
+      @stations.each_with_index do |station,index|
+        puts "#{index + 1} - #{station.name}"
+      end
+      print 'first station: '
+      first_station = gets.strip.to_i
+      print 'last station: '
+      last_station = gets.strip.to_i
+      @routes = []
+      @routes << Route.new(@stations[first_station - 1], @stations[last_station - 1])
+      puts "You have #{@routes.size} route:"
+      p @routes
+    end
+  end
 
   if users_input == 1
     print 'Enter station name: '
     name_station = gets.chomp
-    @stations = []
     @stations << Station.new(name_station)
     puts "Station has been created!"
+    puts @stations
   elsif users_input == 2
     print 'What type of train do you want?(1-cargo, 2-passenger): '
-    train_type = gets.strip.downcase
-
-
-      
+    train_type = gets.strip.to_i
+    create_train(train_type)     
   elsif users_input == 3
-    print 'Enter first station: '
-    first_station = gets.strip
-    print 'Enter last station: '
-    last_station = gets.strip
-    route = Route.new   
+    create_route
+    # print 'Enter first station: '
+    # first_station = gets.strip
+    # print 'Enter last station: '
+    # last_station = gets.strip
+    # route = Route.new  
+  elsif users_input == 13
+    show_all_trains
   end
-
-
-
-  # case users_input
-  #   when 1 then station(numb) = Station.new
-  #   when 2
-  #   when 3
-  #   when 4
-  #   when 5
-  #   when 6
-  #   when 7
-  #   when 8
-  #   when 9
-  #   when 10
-  #   when 11
-  #   when 12
-  # end
 end
 
-
-
-
-
-
-
-
-
-# st1 = Station.new('UFA')
-# puts 'Created new station UFA'
-
-# st2 = Station.new('MSK')
-# puts 'Created new station MSK'
-
-
-# kazan = Station.new('KZN')
-# puts 'Created new station KZN'
-
-# route_ufa_msk = Route.new(st1, st2)
-# route_ufa_msk.add_station(kazan)
-# #route_ufa_msk.show_stations
-
-# train = Train.new(77,'cargo',12)
-# train.accept_route(route_ufa_msk)
-# train.next_station
-# train.prev_station
-# train.print_prev_station
-# train.print_current_station
-# train.go_next_station
-# #train.print_current_station
