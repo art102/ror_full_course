@@ -85,7 +85,11 @@ loop do
   end
 
   def show_all_trains
-    puts "All existing trains: #{@cargo_trains + @passenger_trains}"
+    if defined?(@cargo_trains) && defined?(@passenger_trains)
+      puts puts "All existing trains: #{@cargo_trains + @passenger_trains}" 
+    else
+      puts "You haven't created yet any trains!"
+    end
   end
 
   def create_route
@@ -120,6 +124,23 @@ loop do
     end
   end
 
+   def remove_station_from_route
+    if @routes.size != 0
+      puts "We have next routes:"
+      show_route
+      print "Please choose route: "
+      route = gets.strip.to_i
+      puts "We have next stations on the route:"
+      show_stations_route(route)
+      print "Please enter number of station for remove from route #{@routes[route - 1].stations.first.name} - #{@routes[route - 1].stations.last.name}: "
+      station_for_remove = gets.strip.to_i
+      # puts @stations[station_for_remove].name
+      @routes[route - 1].remove_station(@routes[route - 1].stations[station_for_remove - 1])
+    else
+      puts "You don't have any route! Please type 3 and create route."
+    end
+  end
+
   if users_input == 1
     print 'Enter station name: '
     name_station = gets.strip.downcase
@@ -134,6 +155,8 @@ loop do
     create_route
   elsif users_input == 4
     add_station_to_route
+  elsif users_input == 5
+    remove_station_from_route
   elsif users_input == 11
     show_route
     print "Enter route number: "

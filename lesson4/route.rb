@@ -24,7 +24,7 @@ class Route
     if station != @stations.first && station != @stations.last
       @stations.delete(station)
     else
-      puts "You can't first or last station!"
+      puts "You can't remove first or last station!"
     end
   end
 end
