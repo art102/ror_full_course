@@ -2,7 +2,7 @@
 # require './station.rb'
 
 class Train
-  attr_reader :speed, :type
+  attr_reader :speed, :type, :number
 
   def initialize(number, type)
     @number = number

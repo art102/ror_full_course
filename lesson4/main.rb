@@ -26,6 +26,13 @@ puts %q(
 @stations = []
 # create empty array for routes
 @routes = []
+@exist_trains = []
+@cargo_trains = []
+@passenger_trains = []
+@passenger_wagons = []
+@cargo_wagons = []
+# 10.times { @passenger_wagons  << PassengerWagon.new }
+# 10.times { @cargo_wagons << CargoWagon.new }
 
 loop do
   print 'Please enter number or press "0" if you want to exit: '
@@ -52,6 +59,12 @@ loop do
     end
   end
 
+  # def show_all_trains
+  #   @exist_trains.each_with_index do |train, index|
+  #     puts "#{index + 1}. #{train.number} - #{train.type}"
+  #   end
+  # end
+
   def create_wagon(type)
     if type == 'cargo'
       @cargo_wagons = []
@@ -68,16 +81,14 @@ loop do
     puts 'Train has been created!'
   end
 
-  def create_train(type)
+  def create_train(type,number)
     #random number for train
-    rand_num = rand(1..30)
+    #and_num = rand(1..300)
     if type == 1
-      @cargo_trains = []
-      @cargo_trains << CargoTrain.new(rand_num,'cargo')
+      @exist_trains << CargoTrain.new(number, 'cargo')
       train_message
     elsif type == 2
-      @passenger_trains = []
-      @passenger_trains << PassengerTrain.new(rand_num,'passenger')
+      @exist_trains << PassengerTrain.new(number, 'passenger')
       train_message
     else
       puts 'Incorrect type!'
@@ -85,8 +96,10 @@ loop do
   end
 
   def show_all_trains
-    if defined?(@cargo_trains) && defined?(@passenger_trains)
-      puts puts "All existing trains: #{@cargo_trains + @passenger_trains}" 
+    if @exist_trains.size > 0 
+      @exist_trains.each_with_index do |train, index|
+        puts "#{index + 1}. #{train.number} - #{train.type}"
+      end
     else
       puts "You haven't created yet any trains!"
     end
@@ -141,6 +154,19 @@ loop do
     end
   end
 
+  def add_route_to_train
+    puts "We have this trains:"
+    show_all_trains
+    print "Please choose train: "
+    train = gets.strip.to_i
+    puts "We have this routes:"
+    show_route
+    print "Please choose route: "
+    route = gets.strip.to_i
+    @exist_trains[train - 1].accept_route(@routes[route-1])
+    puts "Train added to route" if @exist_trains[train - 1].position
+  end
+
   if users_input == 1
     print 'Enter station name: '
     name_station = gets.strip.downcase
@@ -150,7 +176,9 @@ loop do
   elsif users_input == 2
     print 'What type of train do you want?(1-cargo, 2-passenger): '
     train_type = gets.strip.to_i
-    create_train(train_type)     
+    print "Please enter number for train: "
+    train_number = gets.strip.to_i
+    create_train(train_type, train_number)
   elsif users_input == 3
     create_route
   elsif users_input == 4
@@ -162,6 +190,8 @@ loop do
     print "Enter route number: "
     route_number = gets.strip.to_i
     show_stations_route(route_number)
+  elsif users_input == 6
+    add_route_to_train
   elsif users_input == 13
     show_all_trains
   end
