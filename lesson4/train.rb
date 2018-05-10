@@ -2,7 +2,7 @@
 # require './station.rb'
 
 class Train
-  attr_reader :speed, :type, :number
+  attr_reader :speed, :type, :number, :wagons, :current_station
 
   def initialize(number, type)
     @number = number
@@ -21,8 +21,8 @@ class Train
   end
 
   def detach_wagon
-    if @speed == 0 && @wagons > 0
-      @wagons -= 1
+    if @speed == 0 && @wagons.size > 0
+      @wagons.pop
     else
       message
     end
