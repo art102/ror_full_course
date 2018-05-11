@@ -206,80 +206,80 @@ class Main
       puts "You haven't created train yet."
     end
   end
-end
 
-def main_menu
+  def main_menu
 
-  # create empty array for trains
-  @stations = []
-  # create empty array for routes
-  @routes = []
-  @exist_trains = []
-  @cargo_trains = []
-  @passenger_trains = []
-  @passenger_wagons = []
-  @cargo_wagons = []
+    # create empty array for trains
+    @stations = []
+    # create empty array for routes
+    @routes = []
+    @exist_trains = []
+    @cargo_trains = []
+    @passenger_trains = []
+    @passenger_wagons = []
+    @cargo_wagons = []
 
 
-  puts %q(
-    1 - Create station 
-    2 - Create train
-    3 - Create route
-    4 - Add station to the route
-    5 - Remove station from the route
-    6 - Assign route to train
-    7 - Attach wagon to the train
-    8 - Detach wagon from the train
-    9 - Move train to forward
-    10 - Move train to back
-    11 - Show stations on the route
-    12 - Show all stations with their trains
-    13 - Show all trains
-  )
+    puts %q(
+      1 - Create station 
+      2 - Create train
+      3 - Create route
+      4 - Add station to the route
+      5 - Remove station from the route
+      6 - Assign route to train
+      7 - Attach wagon to the train
+      8 - Detach wagon from the train
+      9 - Move train to forward
+      10 - Move train to back
+      11 - Show stations on the route
+      12 - Show all stations with their trains
+      13 - Show all trains
+    )
 
-  loop do
-    print 'Please enter number or press "0" if you want to exit: '
-    users_input = gets.to_i
+    loop do
+      print 'Please enter number or press "0" if you want to exit: '
+      users_input = gets.to_i
 
-    break if users_input == 0
+      break if users_input == 0
 
-    if users_input == 1
-      print 'Enter station name: '
-      name_station = gets.strip.downcase
-      @stations << Station.new(name_station)
-      puts "Station has been created!"
-      puts @stations
-    elsif users_input == 2
-      print 'What type of train do you want?(1-cargo, 2-passenger): '
-      train_type = gets.strip.to_i
-      print "Please enter number for train: "
-      train_number = gets.strip.to_i
-      create_train(train_type, train_number)
-    elsif users_input == 3
-      create_route
-    elsif users_input == 4
-      add_station_to_route
-    elsif users_input == 5
-      remove_station_from_route
-    elsif users_input == 6
-      add_route_to_train
-    elsif users_input == 7
-      add_wagon
-    elsif users_input == 8
-      remove_wagon
-    elsif users_input == 9
-      move_train_forward
-    elsif users_input == 10
-      move_train_back
-    elsif users_input == 11
-      show_route
-      print "Enter route number: "
-      route_number = gets.strip.to_i
-      show_stations_route(route_number)
-    elsif users_input == 12
-      show_stations
-    elsif users_input == 13
-      show_all_trains
+      if users_input == 1
+        print 'Enter station name: '
+        name_station = gets.strip.downcase
+        @stations << Station.new(name_station)
+        puts "Station has been created!"
+        puts @stations
+      elsif users_input == 2
+        print 'What type of train do you want?(1-cargo, 2-passenger): '
+        train_type = gets.strip.to_i
+        print "Please enter number for train: "
+        train_number = gets.strip.to_i
+        create_train(train_type, train_number)
+      elsif users_input == 3
+        create_route
+      elsif users_input == 4
+        add_station_to_route
+      elsif users_input == 5
+        remove_station_from_route
+      elsif users_input == 6
+        add_route_to_train
+      elsif users_input == 7
+        add_wagon
+      elsif users_input == 8
+        remove_wagon
+      elsif users_input == 9
+        move_train_forward
+      elsif users_input == 10
+        move_train_back
+      elsif users_input == 11
+        show_route
+        print "Enter route number: "
+        route_number = gets.strip.to_i
+        show_stations_route(route_number)
+      elsif users_input == 12
+        show_stations
+      elsif users_input == 13
+        show_all_trains
+      end
     end
   end
 end
