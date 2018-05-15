@@ -9,12 +9,12 @@ class Train
     @type = type
     @speed = 0
     @wagons = []
-    #@route = Route.new(first_station, last_station)
   end
 
   def attach_wagon(wagon)
     if @speed == 0
       @wagons << wagon
+      puts 'Wagon has been attached.'
     else
       message
     end
@@ -84,7 +84,7 @@ class Train
 
   # service method
   def message
-    'Train is running!'
+    puts 'Train is running!'
   end
 
 end

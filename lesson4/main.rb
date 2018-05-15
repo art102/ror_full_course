@@ -69,7 +69,7 @@ class Main
   def show_all_trains
     if @exist_trains.size > 0 
       @exist_trains.each_with_index do |train, index|
-        puts "#{index + 1}. #{train.number} - #{train.type}, wagons - #{train.wagons}"
+        puts "#{index + 1}. #{train.number} - #{train.type}, speed - #{train.speed} wagons - #{train.wagons}"
       end
     else
       puts "You haven't created yet any trains!"
