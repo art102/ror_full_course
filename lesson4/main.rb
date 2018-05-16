@@ -9,6 +9,18 @@ require_relative 'cargo_wagon'
 
 class Main
 
+  def initialize
+    # create empty array for trains
+    @stations = []
+    # create empty array for routes
+    @routes = []
+    @exist_trains = []
+    @cargo_trains = []
+    @passenger_trains = []
+    @passenger_wagons = []
+    @cargo_wagons = []
+  end
+
   def run
     main_menu
   end
@@ -26,8 +38,12 @@ class Main
   end
 
   def show_route
-    @routes.each_with_index do |route, index|
-      puts "#{index + 1}. #{route.stations.first.name} - #{route.stations.last.name}"
+    if @routes.size > 0
+      @routes.each_with_index do |route, index|
+        puts "#{index + 1}. #{route.stations.first.name} - #{route.stations.last.name}"
+      end
+    else
+      puts "You don't have any route, please add route."
     end
   end
 
@@ -56,10 +72,10 @@ class Main
 
   def create_train(type,number)
     if type == 1
-      @exist_trains << CargoTrain.new(number, 'cargo')
+      @exist_trains << CargoTrain.new(number)
       train_message
     elsif type == 2
-      @exist_trains << PassengerTrain.new(number, 'passenger')
+      @exist_trains << PassengerTrain.new(number)
       train_message
     else
       puts 'Incorrect type!'
@@ -208,18 +224,6 @@ class Main
   end
 
   def main_menu
-
-    # create empty array for trains
-    @stations = []
-    # create empty array for routes
-    @routes = []
-    @exist_trains = []
-    @cargo_trains = []
-    @passenger_trains = []
-    @passenger_wagons = []
-    @cargo_wagons = []
-
-
     puts %q(
       1 - Create station 
       2 - Create train
