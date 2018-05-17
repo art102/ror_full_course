@@ -22,6 +22,7 @@ class Main
   end
 
   def run
+    print_menu
     main_menu
   end
 
@@ -142,7 +143,7 @@ class Main
   end
 
   def add_route_to_train
-    if @routes.size != 0
+    if @routes.size != 0 && @exist_trains.size > 0
       puts "We have this trains:"
       show_all_trains
       print "Please choose train: "
@@ -151,11 +152,15 @@ class Main
       show_route
       print "Please choose route: "
       route = gets.strip.to_i
-      @exist_trains[train - 1].accept_route(@routes[route-1])
-      puts "Train added to route" if @exist_trains[train - 1].position
-      puts "Train now is on the #{@exist_trains[train - 1].position.name} station"
+      if train-1 < @exist_trains.size && route-1 < @routes.size
+        @exist_trains[train - 1].accept_route(@routes[route-1])
+        puts "Train now is on the #{@exist_trains[train - 1].position.name} station"
+        puts "Train added to route" 
+      else
+        puts 'Maybe you have inputted incorrect train number or routing number.'
+      end
     else
-      puts "You don't have any route! Please type 3 and create route."
+      puts "You don't have any route or trains! Please create them."
     end
   end
 
@@ -177,6 +182,8 @@ class Main
       print "Please choose train: "
       train = gets.strip.to_i
       choose_wagon(train)
+    else
+      puts "You haven't created train yet."
     end
   end
 
@@ -223,7 +230,7 @@ class Main
     end
   end
 
-  def main_menu
+  def print_menu
     puts %q(
       1 - Create station 
       2 - Create train
@@ -239,7 +246,9 @@ class Main
       12 - Show all stations with their trains
       13 - Show all trains
     )
+  end
 
+  def main_menu
     loop do
       print 'Please enter number or press "0" if you want to exit: '
       users_input = gets.to_i
@@ -275,10 +284,14 @@ class Main
       elsif users_input == 10
         move_train_back
       elsif users_input == 11
-        show_route
-        print "Enter route number: "
-        route_number = gets.strip.to_i
-        show_stations_route(route_number)
+        if @routes.size > 0
+          show_route
+          print "Enter route number: "
+          route_number = gets.strip.to_i
+          show_stations_route(route_number)
+        else
+          puts 'You have no routes.'
+        end
       elsif users_input == 12
         show_stations
       elsif users_input == 13
