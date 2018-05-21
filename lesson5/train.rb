@@ -1,6 +1,6 @@
 # require './route.rb'
 # require './station.rb'
-require './company_name.rb'
+require './producer_name.rb'
 
 class Train
   include ProducerName

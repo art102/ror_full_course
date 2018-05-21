@@ -1,4 +1,4 @@
-require './company_name.rb'
+require './producer_name.rb'
 
 class Wagon
   include ProducerName
