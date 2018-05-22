@@ -6,11 +6,18 @@ class Train
   include ProducerName
   attr_reader :speed, :type, :number, :wagons, :current_station
 
+  @@trains = [] 
+
+  def self.find(train_number)
+    @@trains.select { |train| train.number == train_number }
+  end
+
   def initialize(number, type)
     @number = number
     @type = type
     @speed = 0
     @wagons = []
+    @@trains << self
   end
 
   def attach_wagon(wagon)

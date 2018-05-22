@@ -1,11 +1,26 @@
 #require './train.rb'
+require './instance_counter.rb'
 
 class Station
+  include InstanceCounter
   attr_reader :name
-  
+
+  # create a new class variable
+  # to store all exists stations in it
+  @@stations = []
+
+  # create class method for output object stations
+  def self.all
+    @@stations
+  end
+
   def initialize(name)
     @name = name
     @trains = []
+    # add object of Station class to
+    # class variable
+    @@stations << self
+    register_instance
   end
 
   # add train object to trains array
