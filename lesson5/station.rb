@@ -8,6 +8,7 @@ class Station
   # create a new class variable
   # to store all exists stations in it
   @@stations = []
+  @instances = 0
 
   # create class method for output object stations
   def self.all
