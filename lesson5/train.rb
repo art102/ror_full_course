@@ -7,10 +7,10 @@ class Train
   include InstanceCounter
   attr_reader :speed, :type, :number, :wagons, :current_station
 
-  @@trains = [] 
+  @@trains = {} 
 
   def self.find(train_number)
-    @@trains.select { |train| train.number == train_number }
+    @@trains[train_number]
   end
 
   def initialize(number, type)
@@ -18,7 +18,7 @@ class Train
     @type = type
     @speed = 0
     @wagons = []
-    @@trains << self
+    @@trains[@number] = self
     # called method from module
     # this method increases the value by one
     register_instance
