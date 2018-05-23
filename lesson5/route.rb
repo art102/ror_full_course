@@ -1,11 +1,15 @@
-#require './station.rb'
+require './instance_counter.rb'
 
 class Route
+  include InstanceCounter
   attr_reader :stations
 
   def initialize(first_station, last_station)
     # add first and last stations to array stations
     @stations = [first_station, last_station]
+    # called method from module
+    # this method increases the value by one
+    register_instance
   end
 
   # output all stations

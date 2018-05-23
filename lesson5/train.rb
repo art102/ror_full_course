@@ -1,9 +1,10 @@
-# require './route.rb'
-# require './station.rb'
+
 require './producer_name.rb'
+require './instance_counter.rb'
 
 class Train
   include ProducerName
+  include InstanceCounter
   attr_reader :speed, :type, :number, :wagons, :current_station
 
   @@trains = [] 
@@ -18,6 +19,9 @@ class Train
     @speed = 0
     @wagons = []
     @@trains << self
+    # called method from module
+    # this method increases the value by one
+    register_instance
   end
 
   def attach_wagon(wagon)
