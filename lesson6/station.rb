@@ -15,6 +15,7 @@ class Station
 
   def initialize(name)
     @name = name
+    validate!
     @trains = []
     # add object of Station class to
     # class variable
@@ -23,7 +24,7 @@ class Station
   end
 
   def validate!
-    raise "Number is not be empty!" if @number.nil?
+    raise "The name can't be empty!" if @name.empty?
     true
   end
 

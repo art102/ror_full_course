@@ -8,7 +8,6 @@ require_relative 'passenger_wagon'
 require_relative 'cargo_wagon'
 
 class Main
-
   def initialize
     # create empty array for trains
     @stations = []
@@ -20,6 +19,8 @@ class Main
     @passenger_wagons = []
     @cargo_wagons = []
   end
+
+  NUMBER_FORMAT = /^\d{3}\-?[a-z]{2}$/i
 
   def run
     print_menu
@@ -78,8 +79,6 @@ class Main
     elsif type == 2
       @exist_trains << PassengerTrain.new(number)
       train_message
-    else
-      puts 'Incorrect type!'
     end
   end
 
@@ -256,17 +255,27 @@ class Main
       break if users_input == 0
 
       if users_input == 1
-        print 'Enter station name: '
-        name_station = gets.strip.downcase
-        @stations << Station.new(name_station)
-        puts "Station has been created!"
-        puts @stations
+        begin
+          print 'Enter station name: '
+          name_station = gets.strip.downcase
+          @stations << Station.new(name_station)
+          puts "Station has been created!"
+          puts @stations
+        rescue RuntimeError => e
+          puts e.message
+          retry
+        end
       elsif users_input == 2
-        print 'What type of train do you want?(1-cargo, 2-passenger): '
-        train_type = gets.strip.to_i
-        print "Please enter number for train: "
-        train_number = gets.strip
-        create_train(train_type, train_number)
+          print 'What type of train do you want?(1-cargo, 2-passenger): '
+          train_type = gets.strip.to_i
+        begin
+          print "Please enter number for train: "
+          train_number = gets.strip
+          create_train(train_type, train_number)
+        rescue RuntimeError => e
+          puts e.message
+          retry
+        end
       elsif users_input == 3
         create_route
       elsif users_input == 4

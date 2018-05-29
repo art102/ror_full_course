@@ -27,16 +27,15 @@ class Train
   end
 
   def validate!
-    raise "Number is not be empty!" if @number.nil?
-    raise "Number is not be at least than 3 symbols!" if @number.size < 3
+    raise "The number can't be empty!" if @number.nil?
+    raise "Number is can't be at least than 3 symbols!" if @number.size < 3
     raise "Number has invalid format" if @number !~ NUMBER_FORMAT
-    raise "Type is not be empty!" if @type.empty?
-    true
+    raise "The type can't be empty!" if @type.empty?
   end
 
   def valid?
     validate!
-  rescue
+  rescue 
     false
   end
 
