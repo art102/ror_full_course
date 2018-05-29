@@ -20,8 +20,6 @@ class Main
     @cargo_wagons = []
   end
 
-  NUMBER_FORMAT = /^\d{3}\-?[a-z]{2}$/i
-
   def run
     print_menu
     main_menu
