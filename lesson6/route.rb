@@ -17,10 +17,6 @@ class Route
     register_instance
   end
 
-  def validate!
-    raise "This objects are same!" if @first_station == @last_station
-  end
-
   # output all stations
   def show_stations
     @stations.each { |station| station }
@@ -39,5 +35,10 @@ class Route
     else
       "You can't remove first or last station!"
     end
+  end
+
+  private
+  def validate!
+    raise "This objects are same!" if @first_station == @last_station
   end
 end

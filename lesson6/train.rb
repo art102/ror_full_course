@@ -29,13 +29,6 @@ class Train
     register_instance
   end
 
-  def validate!
-    raise "The number can't be empty!" if @number.nil?
-    raise "Number is can't be at least than 3 symbols!" if @number.size < 3
-    raise "Number has invalid format" if @number !~ NUMBER_FORMAT
-    raise "The type can't be empty!" if @type.empty?
-  end
-
   def attach_wagon(wagon)
     if @speed == 0
       @wagons << wagon
@@ -109,6 +102,13 @@ class Train
   # service method
   def message
     'Train is running!'
+  end
+
+  def validate!
+    raise "The number can't be empty!" if @number.nil?
+    raise "Number is can't be at least than 3 symbols!" if @number.size < 3
+    raise "Number has invalid format" if @number !~ NUMBER_FORMAT
+    raise "The type can't be empty!" if @type.empty?
   end
 
 end

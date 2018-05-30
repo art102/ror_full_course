@@ -25,13 +25,6 @@ class Station
     register_instance
   end
 
-  # def valid?
-  #   validate!
-  #   true
-  # rescue
-  #   false
-  # end
-
   # add train object to trains array
   def add_train(train)
     @trains << train
