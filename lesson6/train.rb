@@ -1,10 +1,13 @@
 
 require './producer_name.rb'
 require './instance_counter.rb'
+require './validation_test_module.rb'
+
 
 class Train
   include ProducerName
   include InstanceCounter
+  include ValidationTest
   attr_reader :speed, :type, :number, :wagons, :current_station
 
   @@trains = {} 
@@ -31,12 +34,6 @@ class Train
     raise "Number is can't be at least than 3 symbols!" if @number.size < 3
     raise "Number has invalid format" if @number !~ NUMBER_FORMAT
     raise "The type can't be empty!" if @type.empty?
-  end
-
-  def valid?
-    validate!
-  rescue 
-    false
   end
 
   def attach_wagon(wagon)

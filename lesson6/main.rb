@@ -90,6 +90,7 @@ class Main
     end
   end
 
+
   def create_route
     if @stations.empty? || @stations.size == 1
       puts "You have to create two stations. Please type 1 and create two stations"
@@ -104,7 +105,11 @@ class Main
       puts "You have #{@routes.size} route:"
       p @routes
     end
+    rescue RuntimeError => e
+      puts e.message
+      retry
   end
+
 
   def add_station_to_route
     if @routes.size != 0

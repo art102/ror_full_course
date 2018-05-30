@@ -1,15 +1,24 @@
 require './instance_counter.rb'
+require './validation_test_module.rb'
 
 class Route
   include InstanceCounter
+  include ValidationTest
   attr_reader :stations
 
   def initialize(first_station, last_station)
+    @first_station = first_station
+    @last_station = last_station
+    validate!
     # add first and last stations to array stations
     @stations = [first_station, last_station]
     # called method from module
     # this method increases the value by one
     register_instance
+  end
+
+  def validate!
+    raise "This objects are same!" if @first_station == @last_station
   end
 
   # output all stations
