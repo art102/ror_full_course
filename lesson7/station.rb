@@ -30,6 +30,11 @@ class Station
     @trains << train
   end
 
+  def each(&block)
+    @trains.each(&block)
+    self
+  end
+
   # return all trains on station
   def current_trains
     @trains
