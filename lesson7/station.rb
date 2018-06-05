@@ -30,7 +30,7 @@ class Station
     @trains << train
   end
 
-  def each(&block)
+  def each_train(&block)
     @trains.each(&block)
     self
   end

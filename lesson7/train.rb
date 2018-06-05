@@ -29,6 +29,11 @@ class Train
     register_instance
   end
 
+  def each_wagon(&block)
+    @wagons.each(&block)
+    self
+  end
+
   def attach_wagon(wagon)
     if @speed == 0
       @wagons << wagon
