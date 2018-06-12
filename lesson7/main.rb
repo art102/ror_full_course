@@ -203,7 +203,7 @@ class Main
       train = gets.strip.to_i
       @exist_trains[train - 1].each_wagon do |wagon|
         if wagon.is_a?(PassengerWagon)
-          puts "Number: #{wagon.number}, type: #{wagon.class}, free seats: #{wagon.all_seats}, unfree seats: #{wagon.unfree_seats}"
+          puts "Number: #{wagon.number}, type: #{wagon.class}, free seats: #{wagon.capacity}, unfree seats: #{wagon.occupied_capacity}"
         elsif wagon.is_a?(CargoWagon)
           puts "Number: #{wagon.number}, type: #{wagon.class}, free capacity: #{wagon.capacity}, unfree capacity: #{wagon.occupied_capacity}"
         end

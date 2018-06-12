@@ -31,7 +31,6 @@ class Train
 
   def each_wagon(&block)
     @wagons.each(&block)
-    self
   end
 
   def attach_wagon(wagon)
