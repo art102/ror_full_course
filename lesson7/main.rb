@@ -71,7 +71,7 @@ class Main
   def show_all_trains
     if @exist_trains.size > 0 
       @exist_trains.each_with_index do |train, index|
-        puts "#{index + 1}. #{train.number} - #{train.type}, speed - #{train.speed}"
+        puts "#{index + 1}. #{train.number} - #{train.type}, wagons - #{train.wagons.size}"
       end
     else
       puts "You haven't created yet any trains!"
@@ -125,7 +125,6 @@ class Main
       show_stations_route(route)
       print "Please enter number of station for remove from route #{@routes[route - 1].stations.first.name} - #{@routes[route - 1].stations.last.name}: "
       station_for_remove = gets.strip.to_i
-      # puts @stations[station_for_remove].name
       @routes[route - 1].remove_station(@routes[route - 1].stations[station_for_remove - 1])
     else
       puts "You don't have any route! Please type 3 and create route."
@@ -158,8 +157,12 @@ class Main
     if train-1 < @exist_trains.size && @exist_trains[train - 1].is_a?(PassengerTrain)
       print "Enter amount of seats: "
       passenger_seats = gets.strip.to_i
-      wagon = PassengerWagon.new(passenger_seats)
-      @exist_trains[train - 1].attach_wagon(wagon)
+      if passenger_seats.zero?
+        puts "Capacity can't be empty!"
+      else
+        wagon = PassengerWagon.new(passenger_seats)
+        @exist_trains[train - 1].attach_wagon(wagon)
+      end
     elsif train-1 < @exist_trains.size && @exist_trains[train - 1].is_a?(CargoTrain)
       print "Enter capacity of wagon: "
       cargo_capacity = gets.strip.to_i
@@ -252,9 +255,11 @@ class Main
         @stations[station - 1].each_train do |train|
            puts "Number: #{train.number}, type: #{train.class}, wagons: #{train.wagons.size}"
         end
-      elsif
-        puts "You haven't added station or train!"
+      else
+        puts "Invalid station number"
       end
+    else
+      puts "You haven't added station or train yet."
     end
   end
 
@@ -284,15 +289,17 @@ class Main
       train = gets.strip.to_i
       if @exist_trains[train - 1].is_a?(CargoTrain) && @exist_trains[train - 1].wagons.size != 0
         print "Please enter capacity: "
-        capacity = gets.strip.to_i
-        @exist_trains[train - 1].wagons[0].occupy_capacity(capacity)
+        wagon_capacity = gets.strip.to_i
+        @exist_trains[train - 1].wagons[0].occupy_capacity(wagon_capacity)
         puts @exist_trains[train - 1].wagons[0].capacity
       elsif @exist_trains[train - 1].is_a?(PassengerTrain)
-        @exist_trains[train - 1].wagons[0].reduce_seats
-        @exist_trains[train - 1].wagons[0].all_seats
+        @exist_trains[train - 1].wagons[0].occupy_capacity
+        @exist_trains[train - 1].wagons[0].capacity
       else
         puts "Perhaps trains hasn't wagons or you don't have any trains"
       end
+    else
+      puts "You haven't added train yet."
     end
   end
 

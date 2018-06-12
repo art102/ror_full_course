@@ -1,20 +1,16 @@
 require './wagon.rb'
 
 class PassengerWagon < Wagon
-  attr_reader :unfree_seats, :all_seats, :number
-
-  def initialize(seats)
-    @all_seats = seats
-    @unfree_seats = 0
-    @number = rand(1..1000)
+  def initialize(capacity)
+    super
   end
 
-  def reduce_seats
-    if @all_seats != 0 
-      @all_seats -= 1
-      @unfree_seats += 1
+  def occupy_capacity
+    if @capacity != 0 
+      @capacity -= 1
+      @occupied_capacity += 1
     else
-      "Value can't be more than #{@all_seats}"
+      puts "Capacity has already over"
     end
   end
 end
