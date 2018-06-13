@@ -2,20 +2,21 @@ require './producer_name.rb'
 
 class Wagon
   include ProducerName
-  attr_reader :capacity, :occupied_capacity, :number
+  attr_reader :capacity, :occupied_capacity, :number, :free_capacity
 
   def initialize(capacity)
     @capacity = capacity
     @occupied_capacity = 0
+    @free_capacity = capacity
     @number = rand(1..1000)
   end
 
   def occupy_capacity(capacity)
-    if capacity <= @capacity
+    if capacity <= @free_capacity
       @occupied_capacity += capacity
-      @capacity -= capacity  
+      @free_capacity -= capacity  
     else
-      "Value can't be more than #{@capacity}"
+      puts "Capacity has already ended"
     end
   end
 end
