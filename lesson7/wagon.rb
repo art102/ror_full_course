@@ -11,11 +11,10 @@ class Wagon
   end
 
   def occupy_capacity(capacity)
-    if capacity <= @capacity && @occupied_capacity != @capacity 
-      @occupied_capacity += capacity
-      # @free_capacity -= capacity  
+    if free_capacity >= capacity
+      @occupied_capacity += capacity 
     else
-      puts "Capacity has already ended"
+      "Capacity has already ended"
     end
   end
 
