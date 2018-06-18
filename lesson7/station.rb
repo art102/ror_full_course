@@ -50,9 +50,8 @@ class Station
   end
 
   private
+
   def validate!
     raise "The name can't be empty!" if @name.empty?
   end
 end
-
-

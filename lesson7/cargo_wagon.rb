@@ -1,4 +1,4 @@
-require './wagon.rb'
+require "./wagon.rb"
 
 class CargoWagon < Wagon
 end

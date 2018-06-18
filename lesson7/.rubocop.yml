@@ -1,0 +1,30 @@
+AllCops:
+  Include:
+    - '*'
+  Exclude:
+    - 'bin/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'Rakefile'
+    - 'Gemfile'
+    - '*.gemspec'
+  DisplayCopNames: true
+  StyleGuideCopsOnly: false
+
+Rails:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Layout/EmptyLinesAroundArguments:
+  Enabled: false
+
+Layout/SpaceInsideStringInterpolation:
+  EnforcedStyle: no_space
+
+Metrics/LineLength:
+  Max: 100

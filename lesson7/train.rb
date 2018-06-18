@@ -3,14 +3,13 @@ require './producer_name.rb'
 require './instance_counter.rb'
 require './validation_test_module.rb'
 
-
 class Train
   include ProducerName
   include InstanceCounter
   include ValidationTest
   attr_reader :speed, :type, :number, :wagons, :current_station
 
-  @@trains = {} 
+  @@trains = {}
   NUMBER_FORMAT = /^\d{3}\-?[a-z]{2}$/i
 
   def self.find(train_number)
@@ -34,7 +33,7 @@ class Train
   end
 
   def attach_wagon(wagon)
-    if @speed == 0
+    if @speed.zero?
       @wagons << wagon
     else
       message
@@ -42,7 +41,7 @@ class Train
   end
 
   def detach_wagon
-    if @speed == 0 && @wagons.size > 0
+    if @speed.zero? && !@wagons.empty?
       @wagons.pop
     else
       message
@@ -114,5 +113,4 @@ class Train
     raise "Number has invalid format" if @number !~ NUMBER_FORMAT
     raise "The type can't be empty!" if @type.empty?
   end
-
 end

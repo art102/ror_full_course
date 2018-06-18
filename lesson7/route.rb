@@ -38,7 +38,8 @@ class Route
   end
 
   private
+
   def validate!
-    raise "This objects are same!" if @first_station == @last_station
+    raise 'This objects are same!' if @first_station == @last_station
   end
 end
