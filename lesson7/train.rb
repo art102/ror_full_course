@@ -60,12 +60,16 @@ class Train
 
   # show next station on the route
   def next_station
-    @route.stations[@current_station + 1] if @route.stations[@current_station] != @route.stations.last
+    if @route.stations[@current_station] != @route.stations.last
+      @route.stations[@current_station + 1]
+    end
   end
 
   # show previous station on the route
   def prev_station
-    @route.stations[@current_station - 1] if @route.stations[@current_station] != @route.stations.first
+    if @route.stations[@current_station] != @route.stations.first
+      @route.stations[@current_station - 1]
+    end
   end
 
   # go to the next station on the route

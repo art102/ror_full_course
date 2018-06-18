@@ -80,12 +80,6 @@ class Main
     end
   end
 
-  def exception
-    rescue RuntimeError => e
-    puts e.message
-    retry
-  end
-
   def create_route
     if @stations.empty? || @stations.size == 1
       puts "You have to create two stations. Please type 1 and create two stations"
@@ -99,10 +93,9 @@ class Main
       @routes << Route.new(@stations[first_station - 1], @stations[last_station - 1])
       puts "You have #{@routes.size} route:"
     end
-    exception
-  # rescue RuntimeError => e
-  #   puts e.message
-  #   retry
+  rescue RuntimeError => e
+    puts e.message
+    retry
   end
 
   def add_station_to_route
@@ -113,7 +106,8 @@ class Main
       route = gets.strip.to_i
       puts "We have next stations:"
       show_stations
-      print "Please enter number of station for add to route #{@routes[route - 1].stations.first.name} - #{@routes[route - 1].stations.last.name}: "
+      print "Please enter number of station for add to route \
+      #{@routes[route - 1].stations.first.name} - #{@routes[route - 1].stations.last.name}: "
       station_for_add = gets.strip.to_i
       @routes[route - 1].add_station(@stations[station_for_add - 1])
     else
@@ -129,7 +123,8 @@ class Main
       route = gets.strip.to_i
       puts "We have next stations on the route:"
       show_stations_route(route)
-      print "Please enter number of station for remove from route #{@routes[route - 1].stations.first.name} - #{@routes[route - 1].stations.last.name}: "
+      print "Please enter number of station for remove from route \
+      #{@routes[route - 1].stations.first.name} - #{@routes[route - 1].stations.last.name}: "
       station_for_remove = gets.strip.to_i
       @routes[route - 1].remove_station(@routes[route - 1].stations[station_for_remove - 1])
     else
@@ -201,6 +196,11 @@ class Main
     end
   end
 
+  def wagon_info(wagon)
+    puts "Number: #{wagon.number}, type: #{wagon.class}," \
+        "free seats: #{wagon.free_capacity}, unfree seats: #{wagon.occupied_capacity}"
+  end
+
   def show_train_wagons
     if !@exist_trains.empty?
       puts "We have this trains:"
@@ -209,9 +209,9 @@ class Main
       train = gets.strip.to_i
       @exist_trains[train - 1].each_wagon do |wagon|
         if wagon.is_a?(PassengerWagon)
-          puts "Number: #{wagon.number}, type: #{wagon.class}, free seats: #{wagon.free_capacity}, unfree seats: #{wagon.occupied_capacity}"
+          wagon_info(wagon)
         elsif wagon.is_a?(CargoWagon)
-          puts "Number: #{wagon.number}, type: #{wagon.class}, free capacity: #{wagon.free_capacity}, unfree capacity: #{wagon.occupied_capacity}"
+          wagon_info(wagon)
         end
       end
     else
