@@ -19,7 +19,7 @@ class Route
 
   # output all stations
   def show_stations
-    @stations.each { |station| station }
+    @stations
   end
 
   # add station to route

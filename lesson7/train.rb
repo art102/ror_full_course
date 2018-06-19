@@ -1,4 +1,3 @@
-
 require './producer_name.rb'
 require './instance_counter.rb'
 require './validation_test_module.rb'
@@ -60,16 +59,12 @@ class Train
 
   # show next station on the route
   def next_station
-    if @route.stations[@current_station] != @route.stations.last
-      @route.stations[@current_station + 1]
-    end
+    @route.stations[@current_station + 1] if current_station != @route.stations.last
   end
 
   # show previous station on the route
   def prev_station
-    if @route.stations[@current_station] != @route.stations.first
-      @route.stations[@current_station - 1]
-    end
+    @route.stations[@current_station - 1] if current_station != @route.stations.first
   end
 
   # go to the next station on the route

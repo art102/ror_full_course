@@ -30,7 +30,7 @@ class Main
   protected
 
   def show_stations
-    if !@stations.empty?
+    if @stations.any?
       @stations.each_with_index do |station, index|
         puts "#{index + 1}. #{station.name}, trains - #{station.current_trains}"
       end
@@ -40,7 +40,7 @@ class Main
   end
 
   def show_route
-    if !@routes.empty?
+    if @routes.any?
       @routes.each_with_index do |route, index|
         puts "#{index + 1}. #{route.stations.first.name} - #{route.stations.last.name}"
       end
@@ -71,7 +71,7 @@ class Main
   end
 
   def show_all_trains
-    if !@exist_trains.empty?
+    if @exist_trains.any?
       @exist_trains.each_with_index do |train, index|
         puts "#{index + 1}. #{train.number} - #{train.type}, wagons - #{train.wagons.size}"
       end
@@ -98,16 +98,20 @@ class Main
     retry
   end
 
+  def choose_route_message
+    puts "We have next routes:"
+    show_route
+    print "Please choose route: "
+  end
+
   def add_station_to_route
-    if !@routes.empty?
-      puts "We have next routes:"
-      show_route
-      print "Please choose route: "
+    if @routes.any?
+      choose_route_message
       route = gets.strip.to_i
       puts "We have next stations:"
       show_stations
-      print "Please enter number of station for add to route \
-      #{@routes[route - 1].stations.first.name} - #{@routes[route - 1].stations.last.name}: "
+      print "Please enter number of station for add to route" \
+      " #{@routes[route - 1].stations.first.name} - #{@routes[route - 1].stations.last.name}: "
       station_for_add = gets.strip.to_i
       @routes[route - 1].add_station(@stations[station_for_add - 1])
     else
@@ -116,10 +120,8 @@ class Main
   end
 
   def remove_station_from_route
-    if !@routes.empty?
-      puts "We have next routes:"
-      show_route
-      print "Please choose route: "
+    if @routes.any?
+      choose_route_message
       route = gets.strip.to_i
       puts "We have next stations on the route:"
       show_stations_route(route)
@@ -132,39 +134,57 @@ class Main
     end
   end
 
+  def choose_train_message
+    puts "We have this trains:"
+    show_all_trains
+    print "Please choose train: "
+  end
+
+  def route_ro_train(train, route)
+    if train - 1 < @exist_trains.size && route - 1 < @routes.size
+      @exist_trains[train - 1].accept_route(@routes[route - 1])
+      puts "Train now is on the #{@exist_trains[train - 1].position.name} station"
+    else
+      puts "Maybe you have inputted incorrect train number or routing number."
+    end
+  end
+
+  def routes_and_trains_exist?
+    @routes.any? && @exist_trains.any?
+  end
+
   def add_route_to_train
-    if !@routes.empty? && !@exist_trains.empty?
-      puts "We have this trains:"
-      show_all_trains
-      print "Please choose train: "
+    if routes_and_trains_exist?
+      choose_train_message
       train = gets.strip.to_i
-      puts "We have this routes:"
       show_route
       print "Please choose route: "
       route = gets.strip.to_i
-      if train - 1 < @exist_trains.size && route - 1 < @routes.size
-        @exist_trains[train - 1].accept_route(@routes[route - 1])
-        puts "Train now is on the #{@exist_trains[train - 1].position.name} station"
-        puts "Train added to route"
-      else
-        puts "Maybe you have inputted incorrect train number or routing number."
-      end
+      route_ro_train(train, route)
     else
       puts "You don't have any route or trains! Please create them."
     end
   end
 
+  def free_seats_exist?(seats, train)
+    if seats.zero?
+      puts "Capacity can't be empty!"
+    else
+      wagon = PassengerWagon.new(seats)
+      @exist_trains[train - 1].attach_wagon(wagon)
+    end
+  end
+
+  def train_belong_class?(train, type)
+    train - 1 < @exist_trains.size && @exist_trains[train - 1].is_a?(type)
+  end
+
   def choose_wagon(train)
-    if train - 1 < @exist_trains.size && @exist_trains[train - 1].is_a?(PassengerTrain)
+    if train_belong_class?(train, PassengerTrain)
       print "Enter amount of seats: "
       passenger_seats = gets.strip.to_i
-      if passenger_seats.zero?
-        puts "Capacity can't be empty!"
-      else
-        wagon = PassengerWagon.new(passenger_seats)
-        @exist_trains[train - 1].attach_wagon(wagon)
-      end
-    elsif train - 1 < @exist_trains.size && @exist_trains[train - 1].is_a?(CargoTrain)
+      free_seats_exist?(passenger_seats, train)
+    elsif train_belong_class?(train, CargoTrain)
       print "Enter capacity of wagon: "
       cargo_capacity = gets.strip.to_i
       wagon = CargoWagon.new(cargo_capacity)
@@ -202,10 +222,8 @@ class Main
   end
 
   def show_train_wagons
-    if !@exist_trains.empty?
-      puts "We have this trains:"
-      show_all_trains
-      print "Please choose train: "
+    if @exist_trains.any?
+      choose_train_message
       train = gets.strip.to_i
       @exist_trains[train - 1].each_wagon do |wagon|
         if wagon.is_a?(PassengerWagon)
@@ -219,91 +237,115 @@ class Main
     end
   end
 
+  def train_forward(train)
+    if @exist_trains[train - 1].respond_to?(:current_station)
+      @exist_trains[train - 1].move_forward
+      puts "Train has arrived to #{@exist_trains[train - 1].position.name}"
+    else
+      puts "Please add train to route."
+    end
+  end
+
   def move_train_forward
-    if !@exist_trains.empty?
+    if @exist_trains.any?
       show_all_trains
       print "Please choose train: "
       train = gets.strip.to_i
-      if @exist_trains[train - 1].respond_to?(:current_station)
-        @exist_trains[train - 1].move_forward
-        puts "Train has arrived to #{@exist_trains[train - 1].position.name}"
-      else
-        puts "Please add train to route."
-      end
+      train_forward(train)
     else
       puts "You haven't created train yet."
+    end
+  end
+
+  def train_back(train)
+    if @exist_trains[train - 1].position
+      @exist_trains[train - 1].move_back
+      puts "Train has arrived to #{@exist_trains[train - 1].position.name}"
+    else
+      puts "Please add train to route."
     end
   end
 
   def move_train_back
-    if !@exist_trains.empty?
+    if @exist_trains.any?
       show_all_trains
       print "Please choose train: "
       train = gets.strip.to_i
-      if @exist_trains[train - 1].position
-        @exist_trains[train - 1].move_back
-        puts "Train has arrived to #{@exist_trains[train - 1].position.name}"
-      else
-        puts "Please add train to route."
-      end
+      train_back(train)
     else
       puts "You haven't created train yet."
     end
   end
 
+  def check_station_input(station)
+    if station <= @stations.size
+      @stations[station - 1].each_train do |train|
+        puts "Number: #{train.number}, type: #{train.class}, wagons: #{train.wagons.size}"
+      end
+    else
+      puts "Invalid station number"
+    end
+  end
+
   def show_trains_on_station
-    if !@stations.empty? && !@exist_trains.empty?
+    if trains_and_stations_exist?
       puts "We have this stations:"
       show_stations
       print "Please choose station: "
       station = gets.strip.to_i
-      if station <= @stations.size
-        @stations[station - 1].each_train do |train|
-          puts "Number: #{train.number}, type: #{train.class}, wagons: #{train.wagons.size}"
-        end
-      else
-        puts "Invalid station number"
-      end
+      check_station_input(station)
     else
       puts "You haven't added station or train yet."
     end
   end
 
+  def train_to_station(station, train)
+    if station <= @stations.size && train <= @exist_trains.size
+      @stations[station - 1].add_train(@exist_trains[train - 1])
+    else
+      puts "You haven't added train or station!"
+    end
+  end
+
+  def trains_and_stations_exist?
+    @stations.any? && @exist_trains.any?
+  end
+
   def add_train_to_station
-    if !@stations.empty? && !@exist_trains.empty?
+    if trains_and_stations_exist?
       puts "We have this stations:"
       show_stations
       print "Please choose station: "
       station = gets.strip.to_i
-      puts "We have this trains:"
-      show_all_trains
-      print "Please choose train: "
+      choose_train_message
       train = gets.strip.to_i
-      if station <= @stations.size && train <= @exist_trains.size
-        @stations[station - 1].add_train(@exist_trains[train - 1])
-      else
-        puts "You haven't added train or station!"
-      end
+      train_to_station(station, train)
+    end
+  end
+
+  def train_exist_without_wagon?(train)
+    @exist_trains[train - 1].is_a?(CargoTrain) && @exist_trains[train - 1].wagons.any?
+  end
+
+  def take_seat_wagon(train)
+    if train_exist_without_wagon?(train)
+      print "Please enter capacity: "
+      wagon_capacity = gets.strip.to_i
+      @exist_trains[train - 1].wagons[0].occupy_capacity(wagon_capacity)
+      puts @exist_trains[train - 1].wagons[0].capacity
+    elsif @exist_trains[train - 1].is_a?(PassengerTrain)
+      @exist_trains[train - 1].wagons[0].occupy_capacity
+      @exist_trains[train - 1].wagons[0].capacity
+    else
+      puts "Perhaps trains hasn't wagons or you don't have any trains"
     end
   end
 
   def take_seat
-    if !@exist_trains.empty?
-      puts "We have this trains:"
-      show_all_trains
-      print "Please choose train: "
+    if @exist_trains.any?
+      choose_train_message
       train = gets.strip.to_i
-      if @exist_trains[train - 1].is_a?(CargoTrain) && !@exist_trains[train - 1].wagons.empty?
-        print "Please enter capacity: "
-        wagon_capacity = gets.strip.to_i
-        @exist_trains[train - 1].wagons[0].occupy_capacity(wagon_capacity)
-        puts @exist_trains[train - 1].wagons[0].capacity
-      elsif @exist_trains[train - 1].is_a?(PassengerTrain)
-        @exist_trains[train - 1].wagons[0].occupy_capacity
-        @exist_trains[train - 1].wagons[0].capacity
-      else
-        puts "Perhaps trains hasn't wagons or you don't have any trains"
-      end
+      take_seat_wagon(train)
     else
       puts "You haven't added train yet."
     end
