@@ -140,6 +140,11 @@ class Main
     print "Please choose train: "
   end
 
+  def train_index_get
+    print "Please choose train: "
+    @train = gets.strip.to_i
+  end
+
   def route_ro_train(train, route)
     if train - 1 < @exist_trains.size && route - 1 < @routes.size
       @exist_trains[train - 1].accept_route(@routes[route - 1])
@@ -197,9 +202,8 @@ class Main
   def add_wagon
     if !@exist_trains.empty?
       show_all_trains
-      print "Please choose train: "
-      train = gets.strip.to_i
-      choose_wagon(train)
+      train_index_get
+      choose_wagon(@train)
     else
       puts "You haven't created train yet."
     end
@@ -208,9 +212,8 @@ class Main
   def remove_wagon
     if !@exist_trains.empty?
       show_all_trains
-      print "Please choose train: "
-      train = gets.strip.to_i
-      @exist_trains[train - 1].detach_wagon
+      train_index_get
+      @exist_trains[@train - 1].detach_wagon
     else
       puts "You haven't created train yet."
     end
@@ -249,9 +252,8 @@ class Main
   def move_train_forward
     if @exist_trains.any?
       show_all_trains
-      print "Please choose train: "
-      train = gets.strip.to_i
-      train_forward(train)
+      train_index_get
+      train_forward(@train)
     else
       puts "You haven't created train yet."
     end
@@ -269,9 +271,8 @@ class Main
   def move_train_back
     if @exist_trains.any?
       show_all_trains
-      print "Please choose train: "
-      train = gets.strip.to_i
-      train_back(train)
+      train_index_get
+      train_back(@train)
     else
       puts "You haven't created train yet."
     end
@@ -351,26 +352,63 @@ class Main
     end
   end
 
+  def create_station
+    print "Enter station name: "
+    name_station = gets.strip.downcase
+    @stations << Station.new(name_station)
+    puts "Station has been created!"
+    puts @stations
+  rescue RuntimeError => e
+    puts e.message
+    retry
+  end
+
+  def get_train_info
+    print "What type of train do you want?(1-cargo, 2-passenger): "
+    train_type = gets.strip.to_i
+    begin
+      print "Please enter number for train: "
+      train_number = gets.strip
+      create_train(train_type, train_number)
+    rescue RuntimeError => e
+      puts e.message
+      retry
+    end
+  end
+
+  def choose_route
+    if @routes.any?
+      show_route
+      print "Enter route number: "
+      route_number = gets.strip.to_i
+      show_stations_route(route_number)
+    else
+      puts "You have no routes."
+    end
+  end
+
+  MENU = [
+    '1 - Create station',
+    '2 - Create train',
+    '3 - Create route',
+    '4 - Add station to the route',
+    '5 - Remove station from the route',
+    '6 - Assign route to train',
+    '7 - Attach wagon to the train',
+    '8 - Detach wagon from the train',
+    '9 - Move train to forward',
+    '10 - Move train to back',
+    '11 - Show stations on the route',
+    '12 - Show all stations with their trains',
+    '13 - Show all trains',
+    '14 - Show train wagons',
+    '15 - Show trains on stations',
+    '16 - Add train to station',
+    '17 - To take seat(volume) in the wago'
+  ].freeze
+
   def print_menu
-    puts '
-      1 - Create station
-      2 - Create train
-      3 - Create route
-      4 - Add station to the route
-      5 - Remove station from the route
-      6 - Assign route to train
-      7 - Attach wagon to the train
-      8 - Detach wagon from the train
-      9 - Move train to forward
-      10 - Move train to back
-      11 - Show stations on the route
-      12 - Show all stations with their trains
-      13 - Show all trains
-      14 - Show train wagons
-      15 - Show trains on stations
-      16 - Add train to station
-      17 - To take seat(volume) in the wagon
-    '
+    MENU.each { |string| puts string }
   end
 
   def main_menu
@@ -380,65 +418,24 @@ class Main
 
       break if users_input == 0
 
-      if users_input == 1
-        begin
-          print "Enter station name: "
-          name_station = gets.strip.downcase
-          @stations << Station.new(name_station)
-          puts "Station has been created!"
-          puts @stations
-        rescue RuntimeError => e
-          puts e.message
-          retry
-        end
-      elsif users_input == 2
-        print "What type of train do you want?(1-cargo, 2-passenger): "
-        train_type = gets.strip.to_i
-        begin
-          print "Please enter number for train: "
-          train_number = gets.strip
-          create_train(train_type, train_number)
-        rescue RuntimeError => e
-          puts e.message
-          retry
-        end
-      elsif users_input == 3
-        create_route
-      elsif users_input == 4
-        add_station_to_route
-      elsif users_input == 5
-        remove_station_from_route
-      elsif users_input == 6
-        add_route_to_train
-      elsif users_input == 7
-        add_wagon
-      elsif users_input == 8
-        remove_wagon
-      elsif users_input == 9
-        move_train_forward
-      elsif users_input == 10
-        move_train_back
-      elsif users_input == 11
-        if !@routes.empty?
-          show_route
-          print "Enter route number: "
-          route_number = gets.strip.to_i
-          show_stations_route(route_number)
-        else
-          puts "You have no routes."
-        end
-      elsif users_input == 12
-        show_stations
-      elsif users_input == 13
-        show_all_trains
-      elsif users_input == 14
-        show_train_wagons
-      elsif users_input == 15
-        show_trains_on_station
-      elsif users_input == 16
-        add_train_to_station
-      elsif users_input == 17
-        take_seat
+      case users_input
+      when 1 then create_station
+      when 2 then get_train_info
+      when 3 then create_route
+      when 4 then add_station_to_route
+      when 5 then remove_station_from_route
+      when 6 then add_route_to_trai
+      when 7 then add_wagon
+      when 8 then remove_wagon
+      when 9 then move_train_forward
+      when 10 then move_train_back
+      when 11 then choose_route
+      when 12 then show_stations
+      when 13 then show_all_trains
+      when 14 then show_train_wagons
+      when 15 then show_trains_on_station
+      when 16 then add_train_to_station
+      when 17 then take_seat
       end
     end
   end
