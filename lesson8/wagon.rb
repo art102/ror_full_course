@@ -2,7 +2,13 @@ require './producer_name.rb'
 
 class Wagon
   include ProducerName
+  include Accessors
+  include Validation
+
   attr_reader :capacity, :occupied_capacity, :number
+  attr_accessor_with_history :variables
+
+  validate :number, :presence
 
   def initialize(capacity)
     @capacity = capacity

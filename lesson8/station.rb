@@ -1,10 +1,20 @@
 require './instance_counter.rb'
 require './validation_test_module.rb'
+require './validation.rb'
+require './accessors.rb'
 
 class Station
   include InstanceCounter
   include ValidationTest
+  include Accessors
+  include Validation
   attr_reader :name
+
+  attr_accessor_with_history :name
+  strong_attr_accessor :variable, :type
+
+  validate :name, :presence
+  validate :name, :type, String
 
   # create a new class variable
   # to store all exists stations in it

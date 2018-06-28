@@ -1,15 +1,24 @@
 require './producer_name.rb'
 require './instance_counter.rb'
 require './validation_test_module.rb'
+require './validation.rb'
+require './accessors.rb'
 
 class Train
   include ProducerName
   include InstanceCounter
   include ValidationTest
+  include Validation
+  include Accessors
+
   attr_reader :speed, :type, :number, :wagons, :current_station
 
   @@trains = {}
+
   NUMBER_FORMAT = /^\d{3}\-?[a-z]{2}$/i
+
+  attr_accessor_with_history :variables
+  strong_attr_accessor :variable, :type
 
   def self.find(train_number)
     @@trains[train_number]

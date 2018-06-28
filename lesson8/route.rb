@@ -1,10 +1,20 @@
 require './instance_counter.rb'
 require './validation_test_module.rb'
+require './validation.rb'
+require './accessors.rb'
 
 class Route
   include InstanceCounter
   include ValidationTest
+  include Accessors
+  include Validation
   attr_reader :stations
+
+  attr_accessor_with_history :variables
+  strong_attr_accessor :variable, :type
+
+  validate :first_station, :type, Station
+  validate :last_station, :type, Station
 
   def initialize(first_station, last_station)
     @first_station = first_station
